@@ -1,0 +1,19 @@
+{
+  "name": "sdk-tools",
+  "version": "0.1.1",
+  "description": "Tools for the Boundless Web SDK",
+  "main": "index.js",
+  "publishConfig": {
+    "registry": "https://repo.boundlessgeo.com/api/npm/npmjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boundlessgeo/sdk-tools.git"
+  },
+  "author": "Boundless Spatial, Inc.",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/boundlessgeo/sdk-tools/issues"
+  },
+  "homepage": "https://github.com/boundlessgeo/sdk-tools#readme"
+}

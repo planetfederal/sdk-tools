@@ -16,7 +16,7 @@ exports.createBuildDir = function() {
   });
 };
 
-exports.startServer = function() {
+exports.startServer = function(entryPoint) {
   function globalOl(file) {
     var data = '';
     function write(buf) { data += buf; }
@@ -28,7 +28,7 @@ exports.startServer = function() {
   }
 
   var b = browserify({
-    entries: ['./app.jsx'],
+    entries: [entryPoint ? entryPoint : './app.jsx'],
     debug: true,
     plugin: [watchify],
     cache: {},

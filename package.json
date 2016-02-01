@@ -1,6 +1,6 @@
 {
   "name": "sdk-tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tools for the Boundless Web SDK",
   "main": "index.js",
   "publishConfig": {

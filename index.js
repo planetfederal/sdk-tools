@@ -1,11 +1,33 @@
 var browserify = require('browserify');
 var watchify = require('watchify');
 var through = require('through');
+var archiver = require('archiver');
 var fs = require('fs-extra');
 var path = require('path');
 var cp = require('child_process');
 
 var exports = module.exports;
+
+exports.createPackage = function(outputFile) {
+  var output = fs.createWriteStream(outputFile);
+  var archive = archiver('zip');
+  output.on('close', function() {
+    console.log(archive.pointer() + ' total bytes');
+    console.log('Package has been created at: ' + outputFile);
+  });
+  archive.on('error', function(err) {
+    throw err;
+  });
+  archive.pipe(output);
+  archive
+    .append(fs.createReadStream(__dirname + '/../build/app.js'), { name: 'app.js' })
+    .append(fs.createReadStream(__dirname + '/../index.html'), { name: 'index.html' })
+    .append(fs.createReadStream(__dirname + '/../app.css'), { name: 'app.css' })
+    .directory(__dirname + '/../node_modules/boundless-sdk/dist/css', 'css')
+    .directory(__dirname + '/../data', 'data')
+    .directory(__dirname + '/../resources', 'resources')
+    .finalize();
+};
 
 exports.createBuildDir = function() {
   var dir = 'build';

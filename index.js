@@ -4,6 +4,7 @@ var through = require('through');
 var archiver = require('archiver');
 var fs = require('fs-extra');
 var path = require('path');
+var replaceStream = require('replacestream');
 var cp = require('child_process');
 
 var exports = module.exports;
@@ -33,9 +34,13 @@ exports.createPackage = function(outputFile) {
     }
   }
   archive.pipe(output);
+
   archive
     .append(fs.createReadStream(process.cwd() + '/build/app.js'), { name: 'app.js' })
-    .append(fs.createReadStream(process.cwd() + '/index.html'), { name: 'index.html' })
+    .append(fs.createReadStream(process.cwd() + '/index.html')
+    .pipe(replaceStream('node_modules\/boundless-sdk\/dist\/css\/components.css', 'css\/components.css'))
+    .pipe(replaceStream('<script src="\/loader.js"><\/script>', ''))
+    .pipe(replaceStream('\/build\/app-debug.js', 'app.js')), { name: 'index.html' })
     .append(fs.createReadStream(process.cwd() + '/app.css'), { name: 'app.css' });
   for (i = 0, ii = directories.length; i < ii; ++i) {
     archive.directory(directories[i], directories[i].split('/').pop());

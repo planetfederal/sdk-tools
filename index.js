@@ -18,15 +18,29 @@ exports.createPackage = function(outputFile) {
   archive.on('error', function(err) {
     throw err;
   });
+
+  var directories = [
+    process.cwd() + '/node_modules/boundless-sdk/dist/css',
+    process.cwd() + '/data',
+    process.cwd() + '/resources'
+  ];
+  var i, ii;
+  for (i = directories.length - 1; i >= 0; --i) {
+    try {
+      fs.accessSync(directories[i], fs.F_OK);
+    } catch(e) {
+      directories.splice(i, 1);
+    }
+  }
   archive.pipe(output);
   archive
-    .append(fs.createReadStream(__dirname + '/../build/app.js'), { name: 'app.js' })
-    .append(fs.createReadStream(__dirname + '/../index.html'), { name: 'index.html' })
-    .append(fs.createReadStream(__dirname + '/../app.css'), { name: 'app.css' })
-    .directory(__dirname + '/../node_modules/boundless-sdk/dist/css', 'css')
-    .directory(__dirname + '/../data', 'data')
-    .directory(__dirname + '/../resources', 'resources')
-    .finalize();
+    .append(fs.createReadStream(process.cwd() + '/build/app.js'), { name: 'app.js' })
+    .append(fs.createReadStream(process.cwd() + '/index.html'), { name: 'index.html' })
+    .append(fs.createReadStream(process.cwd() + '/app.css'), { name: 'app.css' });
+  for (i = 0, ii = directories.length; i < ii; ++i) {
+    archive.directory(directories[i], directories[i].split('/').pop());
+  }
+  archive.finalize();
 };
 
 exports.createBuildDir = function() {

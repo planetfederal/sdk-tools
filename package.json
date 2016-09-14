@@ -1,11 +1,8 @@
 {
-  "name": "sdk-tools",
-  "version": "0.9.0",
+  "name": "boundless-sdk-tools",
+  "version": "0.9.1",
   "description": "Tools for the Boundless Web SDK",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm.boundlessgeo.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/boundlessgeo/sdk-tools.git"

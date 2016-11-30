@@ -70,6 +70,7 @@ exports.startServer = function(entryPoint) {
 
   var b = browserify({
     entries: [entryPoint ? entryPoint : './app.jsx'],
+    extensions: [".jsx"],
     debug: true,
     plugin: [watchify],
     cache: {},

@@ -57,7 +57,7 @@ exports.createBuildDir = function() {
   });
 };
 
-exports.startServer = function(entryPoint) {
+exports.startServer = function(opt_entryPoint, opt_port) {
   function globalOl(file) {
     var data = '';
     function write(buf) { data += buf; }
@@ -69,7 +69,7 @@ exports.startServer = function(entryPoint) {
   }
 
   var b = browserify({
-    entries: [entryPoint ? entryPoint : './app.jsx'],
+    entries: [opt_entryPoint ? opt_entryPoint : './app.jsx'],
     extensions: [".jsx"],
     debug: true,
     plugin: [watchify],
@@ -98,8 +98,9 @@ exports.startServer = function(entryPoint) {
       process.exit(1);
     } else {
       fs.writeFile(outFile, buf, 'utf-8');
+      var args = opt_port ? ['--port', opt_port] : [];
       childProcess = cp.fork(path.join(path.dirname(require.resolve('openlayers')),
-          '../tasks/serve-lib.js'), []);
+          '../tasks/serve-lib.js'), args);
     }
   });
 };

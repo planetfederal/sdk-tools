@@ -1,5 +1,5 @@
 {
-  "name": "boundless-sdk-tools",
+  "name": "@boundlessgeo/sdk-tools",
   "version": "0.10.0",
   "description": "Tools for the Boundless Web SDK",
   "main": "index.js",

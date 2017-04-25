@@ -21,7 +21,7 @@ exports.createPackage = function(outputFile) {
   });
 
   var directories = [
-    process.cwd() + '/node_modules/boundless-sdk/dist/css',
+    process.cwd() + '/node_modules/@boundlessgeo/sdk/dist/css',
     process.cwd() + '/data',
     process.cwd() + '/resources'
   ];
@@ -38,7 +38,7 @@ exports.createPackage = function(outputFile) {
   archive
     .append(fs.createReadStream(process.cwd() + '/build/app.js'), { name: 'app.js' })
     .append(fs.createReadStream(process.cwd() + '/index.html')
-    .pipe(replaceStream('node_modules\/boundless-sdk\/dist\/css\/components.css', 'css\/components.css'))
+    .pipe(replaceStream('node_modules\/@boundlessgeo\/sdk\/dist\/css\/components.css', 'css\/components.min.css'))
     .pipe(replaceStream('<script src="\/loader.js"><\/script>', ''))
     .pipe(replaceStream('\/build\/app-debug.js', 'app.js')), { name: 'index.html' })
     .append(fs.createReadStream(process.cwd() + '/app.css'), { name: 'app.css' });
